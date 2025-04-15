@@ -66,13 +66,9 @@
 
     async function atualizarCotacao() {
       try {
-        const url = 'https://api.binance.com/api/v3/ticker/price?symbol=USDTBRL';
-        const proxyUrl = https://api.allorigins.win/get?url=${encodeURIComponent(url)};
-        const resposta = await fetch(proxyUrl);
+        const resposta = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=brl");
         const data = await resposta.json();
-        const dados = JSON.parse(data.contents);
-
-        const precoBase = parseFloat(dados.price);
+        const precoBase = data.tether.brl;
         const margem = 0.005;
         const precoComMargem = precoBase * (1 + margem);
 
