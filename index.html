@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>FITZ Intermediações</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #1a1a1a;
+      font-size: 2rem;
+      margin-bottom: 0;
+    }
+    h2 {
+      color: #555;
+      font-size: 1.4rem;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+    #cotacao {
+      font-size: 2.4rem;
+      color: #28a745;
+      font-weight: bold;
+      margin-top: -10px;
+    }
+    button {
+      margin-top: 30px;
+      padding: 14px 28px;
+      font-size: 1rem;
+      border: none;
+      background-color: #25D366;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1ebe5d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>FITZ INTERMEDIAÇÕES</h1>
+    <h2>COTAÇÃO USDT AGORA:</h2>
+    <p id="cotacao">Carregando...</p>
+    <button onclick="enviarWhatsApp()">COMPRAR AGORA!</button>
+  </div>
+
+  <script>
+    let precoFormatado = '';
+
+    async function atualizarCotacao() {
+      try {
+        const url = 'https://api.binance.com/api/v3/ticker/price?symbol=USDTBRL';
+        const proxyUrl = https://api.allorigins.win/get?url=${encodeURIComponent(url)};
+        const resposta = await fetch(proxyUrl);
+        const data = await resposta.json();
+        const dados = JSON.parse(data.contents);
+
+        const precoBase = parseFloat(dados.price);
+        const margem = 0.005;
+        const precoComMargem = precoBase * (1 + margem);
+
+        precoFormatado = precoComMargem.toFixed(3).replace('.', ',');
+        document.getElementById('cotacao').innerText = R$ ${precoFormatado};
+      } catch (error) {
+        document.getElementById('cotacao').innerText = 'Erro ao carregar a cotação';
+      }
+    }
+
+    function enviarWhatsApp() {
+      const mensagem = Olá! Gostaria de comprar USDT com a cotação FITZ de R$ ${precoFormatado};
+      const telefone = '5544998105146';
+      const link = https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)};
+      window.open(link, '_blank');
+    }
+
+    atualizarCotacao();
+    setInterval(atualizarCotacao, 10000);
+  </script>
+</body>
+</html>
